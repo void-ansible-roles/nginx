@@ -55,3 +55,13 @@
     mode: 0640
   notify:
     - iptables
+
+- name: Configure nginx firewall rules
+  copy:
+    src: nginx.6rules
+    dest: /etc/ip6tables.d/nginx.6rules
+    owner: root
+    group: root
+    mode: 0640
+  notify:
+    - iptables
