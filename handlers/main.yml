@@ -1,2 +1,4 @@
 - name: nginx
-  command: sv restart nginx
+  runit:
+    name: nginx
+    state: restarted
