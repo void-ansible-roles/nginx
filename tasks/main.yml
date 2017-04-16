@@ -39,12 +39,10 @@
     mode: 0755
 
 - name: Enable nginx
-  file:
-    src: /etc/sv/nginx
-    dest: /var/service/nginx
-    state: link
-    owner: root
-    group: root
+  runit:
+    name: nginx
+    enabled: yes
+    state: started
 
 - name: Configure nginx firewall rules
   copy:
