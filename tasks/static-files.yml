@@ -1,0 +1,50 @@
+---
+- name: Set variables
+  set_fact:
+    "{{ inner_item.key }}": "{{ inner_item.value }}"
+  with_dict: "{{ item }}"
+  loop_control:
+    loop_var: inner_item
+
+- name: Ensure Nginx is configured
+  include_role:
+    name: nginx
+    allow_duplicates: False
+
+- name: Install dhparam.pem
+  copy:
+    src: dhparam.pem
+    dest: /etc/nginx/dhparam.pem
+    owner: root
+    group: root
+    mode: 0644
+    force: no
+  when: use_ssl
+
+- name: Create folder for external nginx locations
+  file:
+    path: /etc/nginx/locations.d/{{ site_url }}
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+# We can remove the absolute path from src once we can include_role
+- name: Install site descriptor
+  template:
+    src: roles/nginx/templates/static-files.conf
+    dest: /etc/nginx/sites-available/{{ site_name }}.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - nginx
+
+- name: Enable site
+  file:
+    src: /etc/nginx/sites-available/{{ site_name }}.conf
+    dest: /etc/nginx/sites-enabled/{{ site_name }}.conf
+    state: link
+  notify:
+    - nginx
+
