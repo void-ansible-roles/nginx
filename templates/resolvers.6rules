@@ -1,0 +1,6 @@
+*filter
+{% for resolver in ssl_resolvers_v6 %}
+-A OUTPUT -p tcp -d {{ resolver }} --dport {{ 53 }} -j ACCEPT
+-A OUTPUT -p udp -d {{ resolver }} --dport {{ 53 }} -j ACCEPT
+{% endfor %}
+COMMIT
