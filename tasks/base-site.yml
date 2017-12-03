@@ -1,11 +1,4 @@
 ---
-- name: Set variables
-  set_fact:
-    "{{ inner_item.key }}": "{{ inner_item.value }}"
-  with_dict: "{{ item }}"
-  loop_control:
-    loop_var: inner_item
-
 - name: Ensure Nginx is configured
   include_role:
     name: nginx
@@ -23,19 +16,16 @@
 
 - name: Create folder for external nginx locations
   file:
-    path: /etc/nginx/locations.d/{{ site_url }}
+    path: /etc/nginx/locations.d/{{ site.urls | first }}
     state: directory
     owner: root
     group: root
     mode: 0755
 
-# TODO: Remove the absolute path from src once we can include_role
-# from the source role
-# https://github.com/void-ansible-roles/jekyll/issues/8
 - name: Install site descriptor
   template:
-    src: roles/nginx/templates/static-files.conf
-    dest: /etc/nginx/sites-available/{{ site_name }}.conf
+    src: base-site.conf
+    dest: /etc/nginx/sites-available/{{ site.name }}.conf
     owner: root
     group: root
     mode: 0644
@@ -44,8 +34,8 @@
 
 - name: Enable site
   file:
-    src: ../sites-available/{{ site_name }}.conf
-    dest: /etc/nginx/sites-enabled/{{ site_name }}.conf
+    src: ../sites-available/{{ site.name }}.conf
+    dest: /etc/nginx/sites-enabled/{{ site.name }}.conf
     state: link
   notify:
     - nginx

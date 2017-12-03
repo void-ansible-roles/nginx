@@ -1,4 +1,5 @@
 ---
+use_ssl: false
 ssl_resolvers_v4:
   - "8.8.8.8"
 ssl_resolvers_v6:
