@@ -1,19 +1,4 @@
 ---
-- name: Ensure Nginx is configured
-  include_role:
-    name: nginx
-    allow_duplicates: False
-
-- name: Install dhparam.pem
-  copy:
-    src: dhparam.pem
-    dest: /etc/nginx/dhparam.pem
-    owner: root
-    group: root
-    mode: 0644
-    force: no
-  when: use_ssl
-
 - name: Create folder for external nginx locations
   file:
     path: /etc/nginx/locations.d/{{ site.urls | first }}
@@ -43,7 +28,7 @@
 - name: Install firewall rules for resolvers
   template:
     src: roles/nginx/templates/resolvers.rules
-    dest: /etc/iptables.d/nginx-resolvers.rules
+    dest: /etc/iptables.d/nginx-resolvers-{{ site.name }}.rules
     owner: root
     group: root
     mode: 0640
@@ -53,7 +38,7 @@
 - name: Install firewall v6 rules for resolvers
   template:
     src: roles/nginx/templates/resolvers.6rules
-    dest: /etc/ip6tables.d/nginx-resolvers.6rules
+    dest: /etc/ip6tables.d/nginx-resolvers-{{ site.name }}.6rules
     owner: root
     group: root
     mode: 0640

@@ -14,6 +14,16 @@
   notify:
     - nginx
 
+- name: Install dhparam.pem
+  copy:
+    src: dhparam.pem
+    dest: /etc/nginx/dhparam.pem
+    owner: root
+    group: root
+    mode: 0644
+    force: no
+  when: use_ssl
+
 - name: Create the webroot
   file:
     path: /srv/www
