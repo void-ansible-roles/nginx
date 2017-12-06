@@ -15,14 +15,9 @@
     - nginx
 
 - name: Install dhparam.pem
-  copy:
-    src: dhparam.pem
-    dest: /etc/nginx/dhparam.pem
-    owner: root
-    group: root
-    mode: 0644
-    force: no
-  when: use_ssl
+  command: openssl dhparam -out /etc/nginx/dhparam.pem {{ nginx_dhparam_bits | default(4096) }}
+  args:
+    creates: /etc/nginx/dhparam.pem
 
 - name: Create the webroot
   file:
