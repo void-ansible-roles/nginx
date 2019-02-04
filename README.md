@@ -26,7 +26,7 @@ Variables Required:
   * None
 
 Optional Variables:
-  * None
+  * `nginx_acme_challenge_path`
 
 Files Required:
   * None
