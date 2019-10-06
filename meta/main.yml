@@ -1,3 +1,18 @@
 ---
 dependencies:
-  - { role: network }
+  - { role: void.network }
+
+galaxy_info:
+  role_name: nginx
+  author: Michael Aldridge
+  description: nginx webserver configured with drop in operation for other roles.
+  license: license (MIT)
+  min_ansible_version: 1.2
+  platforms:
+    - name: Void Linux
+      version:
+        - all
+  galaxy_tags:
+    - nginx
+    - web
+    - server
