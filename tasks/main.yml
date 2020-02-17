@@ -15,7 +15,7 @@
     - nginx
 
 - name: Install dhparam.pem
-  command: openssl dhparam -out /etc/nginx/dhparam.pem {{ nginx_dhparam_bits | default(4096) }}
+  command: openssl dhparam -out /etc/nginx/dhparam.pem {{ nginx_dhparam_bits }}
   args:
     creates: /etc/nginx/dhparam.pem
 
