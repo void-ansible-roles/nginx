@@ -1,5 +1,6 @@
 ---
 nginx_dhparam_bits: 2048
+nginx_bind_443: false
 use_ssl: false
 ssl_resolvers_v4:
   - "8.8.8.8"

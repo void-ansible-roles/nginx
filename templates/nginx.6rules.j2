@@ -1,0 +1,6 @@
+*filter
+-A INPUT -p tcp --dport 80 -j ACCEPT
+{% if nginx_bind_443 %}
+-A INPUT -p tcp --dport 443 -j ACCEPT
+{% endif %}
+COMMIT

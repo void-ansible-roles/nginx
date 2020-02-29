@@ -50,8 +50,8 @@
     state: started
 
 - name: Configure nginx firewall rules
-  copy:
-    src: nginx.rules
+  template:
+    src: nginx.rules.j2
     dest: /etc/iptables.d/nginx.rules
     owner: root
     group: root
@@ -60,8 +60,8 @@
     - iptables
 
 - name: Configure nginx firewall rules
-  copy:
-    src: nginx.6rules
+  template:
+    src: nginx.6rules.j2
     dest: /etc/ip6tables.d/nginx.6rules
     owner: root
     group: root
